@@ -17,8 +17,8 @@ engine = create_engine(
 # Create SessionLocal class
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Create Base class
-Base = declarative_base()
+# Import Base from simplified models
+from app.models.simple import Base
 
 
 # Dependency to get DB session

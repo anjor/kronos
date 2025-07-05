@@ -1,9 +1,8 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 
-Base = declarative_base()
+from .base import Base
 
 class User(Base):
     __tablename__ = "users"
@@ -16,5 +15,3 @@ class User(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
-    calendars = relationship("Calendar", back_populates="user", cascade="all, delete-orphan")
-    clients = relationship("Client", back_populates="user", cascade="all, delete-orphan")

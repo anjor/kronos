@@ -1,9 +1,8 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, ForeignKey, Text, JSON, Table
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 
-Base = declarative_base()
+from .base import Base
 
 # Association table for many-to-many relationship between events and clients
 event_clients = Table(
@@ -50,6 +49,4 @@ class Event(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
-    calendar = relationship("Calendar", back_populates="events")
-    clients = relationship("Client", secondary=event_clients, back_populates="events")
-    conflicts = relationship("Conflict", back_populates="event", cascade="all, delete-orphan")
+    # Simplified - no relationships for now

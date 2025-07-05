@@ -1,10 +1,9 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, ForeignKey, Text, Enum as SQLEnum
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 import enum
 
-Base = declarative_base()
+from .base import Base
 
 class CalendarProvider(enum.Enum):
     GOOGLE = "google"
@@ -22,6 +21,7 @@ class Calendar(Base):
     description = Column(Text)
     is_primary = Column(Boolean, default=False)
     is_active = Column(Boolean, default=True)
+    is_master = Column(Boolean, default=False)  # The one true calendar that Cal.com connects to
     
     # OAuth tokens (encrypted)
     access_token = Column(Text)
@@ -36,5 +36,4 @@ class Calendar(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
-    user = relationship("User", back_populates="calendars")
-    events = relationship("Event", back_populates="calendar", cascade="all, delete-orphan")
+    # Simplified - no relationships for now

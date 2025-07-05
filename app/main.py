@@ -36,11 +36,12 @@ async def health_check():
     return {"status": "healthy"}
 
 
-# Include routers (to be added)
-# from app.api import auth, calendars, events, clients, conflicts, availability
-# app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
-# app.include_router(calendars.router, prefix="/api/calendars", tags=["calendars"])
-# app.include_router(events.router, prefix="/api/events", tags=["events"])
-# app.include_router(clients.router, prefix="/api/clients", tags=["clients"])
-# app.include_router(conflicts.router, prefix="/api/conflicts", tags=["conflicts"])
-# app.include_router(availability.router, prefix="/api/availability", tags=["availability"])
+# Models will be imported through the API modules
+
+# Include routers
+from app.api import users, calendars, events, sync
+
+app.include_router(users.router, prefix="/api/users", tags=["users"])
+app.include_router(calendars.router, prefix="/api/calendars", tags=["calendars"])
+app.include_router(events.router, prefix="/api/events", tags=["events"])
+app.include_router(sync.router, prefix="/api/sync", tags=["sync"])

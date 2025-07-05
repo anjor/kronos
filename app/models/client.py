@@ -1,10 +1,8 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, ForeignKey, Text
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
-from .event import event_clients
 
-Base = declarative_base()
+from .base import Base
 
 class Client(Base):
     __tablename__ = "clients"
@@ -28,5 +26,4 @@ class Client(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
-    user = relationship("User", back_populates="clients")
-    events = relationship("Event", secondary=event_clients, back_populates="clients")
+    # Simplified - no relationships for now

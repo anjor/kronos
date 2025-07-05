@@ -1,10 +1,9 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, ForeignKey, Text, Enum as SQLEnum
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 import enum
 
-Base = declarative_base()
+from .base import Base
 
 class ConflictType(enum.Enum):
     OVERLAP = "overlap"
@@ -44,5 +43,4 @@ class Conflict(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
-    event = relationship("Event", foreign_keys=[event_id])
-    conflicting_event = relationship("Event", foreign_keys=[conflicting_event_id])
+    # Simplified - no relationships for now
