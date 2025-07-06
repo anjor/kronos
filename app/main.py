@@ -1,5 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 
 from app.config import settings
 
@@ -21,19 +23,30 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Mount static files
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+
+# Setup templates
+templates = Jinja2Templates(directory="app/templates")
+
 
 @app.get("/")
-async def root():
-    return {
-        "message": "Welcome to Kronos Calendar Management System",
-        "version": "0.1.0",
-        "docs": "/docs" if settings.debug else "Disabled in production",
-    }
+async def root(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
 @app.get("/health")
 async def health_check():
     return {"status": "healthy"}
+
+
+@app.get("/app")
+async def app_redirect():
+    return {
+        "message": "Kronos UI is available via Streamlit",
+        "instructions": "Run 'streamlit run frontend.py' to access the full application interface",
+        "api_docs": "/docs" if settings.debug else "API documentation disabled in production"
+    }
 
 
 # Models will be imported through the API modules
