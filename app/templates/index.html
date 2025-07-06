@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kronos - Unified Calendar Management for Freelancers</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f9fafb;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: var(--white);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .hero {
+            padding: 8rem 0 4rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white);
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+        }
+
+        .calendar-preview {
+            background: var(--white);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            color: var(--text-dark);
+        }
+
+        .calendar-day.has-event {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .features {
+            padding: 4rem 0;
+            background: var(--bg-light);
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .how-it-works {
+            padding: 4rem 0;
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .step {
+            text-align: center;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .cta {
+            padding: 4rem 0;
+            background: var(--primary);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        footer {
+            padding: 2rem 0;
+            background: var(--text-dark);
+            color: var(--white);
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="/" class="logo">📅 Kronos</a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How it Works</a>
+                <a href="/app" class="btn btn-primary">Launch App</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div>
+                    <h1>Unified Calendar Management for Freelancers</h1>
+                    <p>Sync all your client calendars into one master view. Never double-book again.</p>
+                    <div class="hero-buttons">
+                        <a href="/app" class="btn btn-primary">Get Started</a>
+                        <a href="#features" class="btn btn-secondary" style="background: white; color: var(--primary);">Learn More</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="calendar-preview">
+                        <div class="calendar-header">
+                            <h3>November 2024</h3>
+                            <span>Master Calendar</span>
+                        </div>
+                        <div class="calendar-grid">
+                            <div class="calendar-day">S</div>
+                            <div class="calendar-day">M</div>
+                            <div class="calendar-day">T</div>
+                            <div class="calendar-day">W</div>
+                            <div class="calendar-day">T</div>
+                            <div class="calendar-day">F</div>
+                            <div class="calendar-day">S</div>
+                            <div class="calendar-day">1</div>
+                            <div class="calendar-day">2</div>
+                            <div class="calendar-day has-event">3</div>
+                            <div class="calendar-day">4</div>
+                            <div class="calendar-day has-event">5</div>
+                            <div class="calendar-day">6</div>
+                            <div class="calendar-day">7</div>
+                            <div class="calendar-day has-event">8</div>
+                            <div class="calendar-day">9</div>
+                            <div class="calendar-day">10</div>
+                            <div class="calendar-day has-event">11</div>
+                            <div class="calendar-day has-event">12</div>
+                            <div class="calendar-day">13</div>
+                            <div class="calendar-day">14</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <h2>Everything You Need to Manage Multiple Calendars</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Multi-Calendar Sync</h3>
+                    <p>Connect Google, Outlook, and Apple calendars. Sync all your client calendars into one unified view.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚫</div>
+                    <h3>Conflict Prevention</h3>
+                    <p>Automatically detect and prevent double-bookings across all your calendars. Stay organized effortlessly.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Master Calendar</h3>
+                    <p>One calendar to rule them all. See all your commitments in a single, clean interface.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Privacy First</h3>
+                    <p>Your calendar data stays secure. We only sync what you explicitly allow.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Real-time Updates</h3>
+                    <p>Changes sync instantly across all connected calendars. Never miss an update.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Time Analytics</h3>
+                    <p>Understand how you spend your time across different clients and projects.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2>How Kronos Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Connect Your Calendars</h3>
+                    <p>Link all your client calendars from Google, Outlook, or Apple.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Create Master Calendar</h3>
+                    <p>Kronos creates a unified master calendar with all your events.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Sync Automatically</h3>
+                    <p>Events sync in real-time. Busy blocks prevent double-booking.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Stay Organized</h3>
+                    <p>Focus on your work while Kronos manages your calendar complexity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Simplify Your Calendar Management?</h2>
+            <p>Join freelancers who save hours every week with Kronos.</p>
+            <a href="/app" class="btn btn-secondary" style="background: white; color: var(--primary);">Start Using Kronos</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Kronos. Built for freelancers, by freelancers.</p>
+        </div>
+    </footer>
+</body>
+</html>
