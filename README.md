@@ -13,52 +13,51 @@ A multi-calendar management system for freelancers that syncs events from Google
 
 ## Tech Stack
 
-- **Backend**: Python 3.8+ with FastAPI
-- **Database**: PostgreSQL with SQLAlchemy ORM
-- **Task Queue**: Celery with Redis for background processing
-- **Authentication**: OAuth 2.0 for calendar providers
-- **Package Management**: uv for fast dependency management
+- **Backend**: FastAPI, SQLAlchemy, PostgreSQL
+- **Frontend**: Next.js, TypeScript, Tailwind CSS (in development)
+- **Authentication**: JWT with bcrypt
+- **Background Jobs**: Celery, Redis (planned)
+- **Deployment**: Docker, nginx
+- **Calendar APIs**: Google Calendar, Microsoft Graph (planned)
 
 ## Quick Start
 
-### Prerequisites
+### Development Setup
 
-- Python 3.8+
-- Docker and Docker Compose
-- uv package manager
-
-### Installation
-
-1. **Clone the repository**
+1. **Clone and setup environment:**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/anjor/kronos.git
    cd kronos
-   ```
-
-2. **Install dependencies**
-   ```bash
-   uv sync
-   ```
-
-3. **Set up environment variables**
-   ```bash
    cp .env.example .env
    # Edit .env with your configuration
    ```
 
-4. **Start database services**
+2. **Start backend services:**
    ```bash
-   docker-compose up -d postgres redis
+   docker compose up -d  # PostgreSQL + Redis
+   uv sync               # Install Python dependencies
+   uv run python create_tables.py  # Create database tables
+   uv run uvicorn app.main:app --reload  # Start API server
    ```
 
-5. **Run database migrations**
+3. **Start frontend (in development):**
    ```bash
-   uv run alembic upgrade head
+   cd frontend
+   npm install
+   npm run dev  # Starts on http://localhost:3000
    ```
 
-6. **Start the application**
+### Production Deployment
+
+1. **Configure environment:**
    ```bash
-   uv run uvicorn app.main:app --reload
+   cp .env.example .env
+   # Set production values for SECRET_KEY, etc.
+   ```
+
+2. **Deploy with Docker:**
+   ```bash
+   ./deploy.sh  # Coming soon
    ```
 
 The API will be available at `http://localhost:8000` with documentation at `http://localhost:8000/docs`.

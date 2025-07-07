@@ -12,13 +12,13 @@ class Settings(BaseSettings):
     debug: bool = True
 
     # Database
-    database_url: str
+    database_url: str = "postgresql://kronos:kronos_password@localhost:5432/kronos_db"
 
     # Redis
-    redis_url: str
+    redis_url: str = "redis://localhost:6379/0"
 
     # Security
-    secret_key: str
+    secret_key: str = "your-secret-key-change-in-production"
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 30
 

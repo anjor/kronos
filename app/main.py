@@ -1,7 +1,5 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.templating import Jinja2Templates
-from fastapi.staticfiles import StaticFiles
 
 from app.config import settings
 
@@ -23,16 +21,24 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mount static files
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
+# Add rate limiting
+from app.middleware.rate_limit import AuthenticatedRateLimitMiddleware
+from datetime import timedelta
 
-# Setup templates
-templates = Jinja2Templates(directory="app/templates")
+app.add_middleware(
+    AuthenticatedRateLimitMiddleware,
+    calls=100,  # 100 requests
+    period=timedelta(minutes=1)  # per minute
+)
 
 
 @app.get("/")
-async def root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+async def root():
+    return {
+        "message": "Welcome to Kronos Calendar Management System",
+        "version": "0.1.0",
+        "docs": "/docs" if settings.debug else "Disabled in production",
+    }
 
 
 @app.get("/health")
@@ -40,21 +46,9 @@ async def health_check():
     return {"status": "healthy"}
 
 
-@app.get("/app")
-async def app_redirect():
-    return {
-        "message": "Kronos UI is available via Streamlit",
-        "instructions": "Run 'streamlit run frontend.py' to access the full application interface",
-        "api_docs": "/docs" if settings.debug else "API documentation disabled in production"
-    }
-
-
 # Models will be imported through the API modules
 
-# Include routers
-from app.api import users, calendars, events, sync
+# Include API v1 router
+from app.api.v1.router import api_router
 
-app.include_router(users.router, prefix="/api/users", tags=["users"])
-app.include_router(calendars.router, prefix="/api/calendars", tags=["calendars"])
-app.include_router(events.router, prefix="/api/events", tags=["events"])
-app.include_router(sync.router, prefix="/api/sync", tags=["sync"])
+app.include_router(api_router, prefix="/api/v1")
