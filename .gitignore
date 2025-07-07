@@ -96,3 +96,5 @@ celerybeat.pid
 
 # uv
 .uv/
+
+frontend/node_modules
