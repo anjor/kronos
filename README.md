@@ -2,7 +2,27 @@
 
 A multi-calendar management system for freelancers that syncs events from Google Calendar, Microsoft Calendar, and Cal.com, detects conflicts, and provides unified availability management.
 
-## Features
+> 🚧 **Currently in Development** - Join the [waitlist](https://kronos-landing.vercel.app) for early access!
+
+## Current Status
+
+Kronos is being built in public! The project currently includes:
+
+✅ **Landing Page**: Waitlist capture and founder story  
+✅ **Backend API**: FastAPI with SQLAlchemy and PostgreSQL  
+✅ **Basic Frontend**: Next.js with Tailwind CSS  
+🔄 **Calendar Integration**: Google Calendar API (in progress)  
+⏳ **Beta Launch**: Planned for early 2025  
+
+[Join the waitlist](https://kronos-landing.vercel.app) to get early access!
+
+## Why Kronos?
+
+As an independent consultant working with AI startups, Fortune 500 companies, and blockchain projects, I lost a $5,000 client because I double-booked a crucial meeting. Each client used different scheduling tools (Google Calendar, Microsoft Teams, Cal.com), and manually managing multiple calendars became impossible.
+
+Kronos solves this problem by providing one unified view of all your calendars with automatic conflict detection. Built by a consultant who understands the pain of calendar chaos.
+
+## Planned Features
 
 - **Multi-Calendar Sync**: Connect and sync with Google Calendar, Microsoft Calendar, and Cal.com
 - **Conflict Detection**: Automatically detect scheduling conflicts across all calendars
@@ -14,7 +34,7 @@ A multi-calendar management system for freelancers that syncs events from Google
 ## Tech Stack
 
 - **Backend**: FastAPI, SQLAlchemy, PostgreSQL
-- **Frontend**: Next.js, TypeScript, Tailwind CSS (in development)
+- **Frontend**: Next.js, TypeScript, Tailwind CSS
 - **Authentication**: JWT with bcrypt
 - **Background Jobs**: Celery, Redis (planned)
 - **Deployment**: Docker, nginx
@@ -40,7 +60,7 @@ A multi-calendar management system for freelancers that syncs events from Google
    uv run uvicorn app.main:app --reload  # Start API server
    ```
 
-3. **Start frontend (in development):**
+3. **Start frontend:**
    ```bash
    cd frontend
    npm install
@@ -49,6 +69,13 @@ A multi-calendar management system for freelancers that syncs events from Google
 
 ### Production Deployment
 
+#### Frontend (Landing Page)
+```bash
+cd frontend
+vercel  # Deploy to Vercel
+```
+
+#### Backend (API)
 1. **Configure environment:**
    ```bash
    cp .env.example .env
@@ -57,7 +84,8 @@ A multi-calendar management system for freelancers that syncs events from Google
 
 2. **Deploy with Docker:**
    ```bash
-   ./deploy.sh  # Coming soon
+   docker build -t kronos .
+   docker run -p 8000:8000 --env-file .env kronos
    ```
 
 The API will be available at `http://localhost:8000` with documentation at `http://localhost:8000/docs`.
@@ -168,9 +196,9 @@ POST /api/conflicts/{id}/resolve # Mark conflict as resolved
 
 ```
 kronos/
-├── app/
+├── app/                       # Backend (FastAPI)
 │   ├── __init__.py
-│   ├── main.py                 # FastAPI app entry point
+│   ├── main.py                # FastAPI app entry point
 │   ├── config.py              # Configuration management
 │   ├── database.py            # Database connection
 │   ├── models/                # SQLAlchemy models
@@ -184,10 +212,19 @@ kronos/
 │   ├── services/              # Business logic
 │   ├── tasks/                 # Celery background tasks
 │   └── utils/                 # Utility functions
+├── frontend/                  # Frontend (Next.js)
+│   ├── app/                   # Next.js app directory
+│   │   ├── page.tsx           # Landing page
+│   │   ├── about/             # About page
+│   │   ├── api/               # API routes (waitlist)
+│   │   ├── auth/              # Authentication pages
+│   │   └── dashboard/         # Dashboard page
+│   ├── package.json           # Frontend dependencies
+│   └── .gitignore             # Frontend gitignore
 ├── migrations/                # Alembic database migrations
 ├── tests/                     # Test files
 ├── docker-compose.yml         # Development services
-├── pyproject.toml            # Project dependencies
+├── pyproject.toml            # Backend dependencies
 └── .env.example              # Environment template
 ```
 
@@ -270,3 +307,11 @@ For issues and questions:
 - Open an issue on GitHub
 - Check the API documentation at `/docs`
 - Review the configuration in `.env.example`
+- Join the [waitlist](https://kronos-landing.vercel.app) for updates and early access
+
+## Building in Public
+
+Follow the development journey:
+- **GitHub**: [anjor/kronos](https://github.com/anjor/kronos)
+- **Twitter**: [@yourhandle](https://twitter.com/yourhandle)
+- **Website**: [anjor.xyz](https://anjor.xyz)
