@@ -313,5 +313,5 @@ For issues and questions:
 
 Follow the development journey:
 - **GitHub**: [anjor/kronos](https://github.com/anjor/kronos)
-- **Twitter**: [@yourhandle](https://twitter.com/yourhandle)
+- **Twitter**: [@\_\_anjor](https://twitter.com/__anjor)
 - **Website**: [anjor.xyz](https://anjor.xyz)
