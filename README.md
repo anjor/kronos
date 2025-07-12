@@ -14,8 +14,6 @@ Kronos is being built in public! The project currently includes:
 🔄 **Calendar Integration**: Google Calendar API (in progress)  
 ⏳ **Beta Launch**: Planned for early 2025  
 
-[Join the waitlist](https://kronos-landing.vercel.app) to get early access!
-
 ## Why Kronos?
 
 As an independent consultant working with AI startups, Fortune 500 companies, and blockchain projects, I lost a $5,000 client because I double-booked a crucial meeting. Each client used different scheduling tools (Google Calendar, Microsoft Teams, Cal.com), and manually managing multiple calendars became impossible.
