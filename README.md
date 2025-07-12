@@ -305,7 +305,6 @@ For issues and questions:
 - Open an issue on GitHub
 - Check the API documentation at `/docs`
 - Review the configuration in `.env.example`
-- Join the [waitlist](https://kronos-landing.vercel.app) for updates and early access
 
 ## Building in Public
 
